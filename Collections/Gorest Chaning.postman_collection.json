@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "ea536b59-5ab8-4b88-b32d-38a2fe8c2910",
+		"name": "Gorest Chaning",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49628350",
+		"_collection_link": "https://piotr-staszewski666-8584708.postman.co/workspace/Testing~388021e7-9c4c-4d01-b810-b57a25f91afd/collection/49628350-ea536b59-5ab8-4b88-b32d-38a2fe8c2910?action=share&source=collection_link&creator=49628350"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var random=Math.random().toString(36).substring(2);\r",
+							"\r",
+							"var usermail=\"jim\"+random+\"@gmail.com\";\r",
+							"var username=\"jim\"+random;\r",
+							"\r",
+							"pm.environment.set(\"email_env\",usermail);\r",
+							"pm.environment.set(\"name_env\",username);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);\r",
+							"pm.environment.set(\"userid_env\",jsonData.id);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\":\"{{name_env}}\",\r\n\"gender\":\"male\",\r\n\"email\":\"{{email_env}}\",\r\n\"status\":\"inactive\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_gorest}}/public/v2/users",
+					"host": [
+						"{{url_gorest}}"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Detiles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"values of json filds\", () =>{\r",
+							"var jsonData=pm.response.json();\r",
+							"\r",
+							"pm.expect(jsonData.id).to.eql(pm.environment.get(\"userid_env\"));\r",
+							"pm.expect(jsonData.name).to.eql(pm.environment.get(\"name_env\"));\r",
+							"pm.expect(jsonData.email).to.eql(pm.environment.get(\"email_env\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_gorest}}/public/v2/users/{{userid_env}}",
+					"host": [
+						"{{url_gorest}}"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{userid_env}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var random=Math.random().toString(36).substring(2);\r",
+							"\r",
+							"var usermail=\"jim\"+random+\"@gmail.com\";\r",
+							"var username=\"jim\"+random;\r",
+							"\r",
+							"pm.environment.set(\"email_env\",usermail);\r",
+							"pm.environment.set(\"name_env\",username);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\":\"{{name_env}}\",\r\n\"email\":\"{{email_env}}\",\r\n\"status\":\"active\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_gorest}}/public/v2/users/{{userid_env}}",
+					"host": [
+						"{{url_gorest}}"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{userid_env}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.unset(\"userid_env\");\r",
+							"pm.environment.unset(\"name_env\");\r",
+							"pm.environment.unset(\"email_env\");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\":\"scott\",\r\n\"email\":\"abc@gmail.com\",\r\n\"status\":\"active\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url_gorest}}/public/v2/users/{{userid_env}}",
+					"host": [
+						"{{url_gorest}}"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{userid_env}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{Gorest_Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Gorest_Token",
+			"value": ""
+		}
+	]
+}

@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "19f13dbc-3602-4578-a0c9-87d8d33edf90",
+		"name": "Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49628350",
+		"_collection_link": "https://piotr-staszewski666-8584708.postman.co/workspace/Testing~388021e7-9c4c-4d01-b810-b57a25f91afd/collection/49628350-19f13dbc-3602-4578-a0c9-87d8d33edf90?action=share&source=collection_link&creator=49628350"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>{\r",
+							"pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful GET request\", () =>{\r",
+							"pm.expect(pm.response.code).to.be.oneOf([200,201,202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => {\r",
+							"pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.test(\"Test data type of the response\", () => {\r",
+							"pm.expect(jsonData).to.be.an(\"object\");\r",
+							"pm.expect(jsonData.name).to.be.a(\"string\");\r",
+							"pm.expect(jsonData.age).to.be.a(\"number\");\r",
+							"pm.expect(jsonData.subjects).to.be.an(\"array\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test array properties\", () => {\r",
+							"pm.expect(jsonData.subjects).to.include(\"History\");\r",
+							"pm.expect(jsonData.subjects).to.have.members([\"Biology\", \"Chemistry\", \"History\"]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Value of grade is 11th\", () => {\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.id).to.eql(\"2\");\r",
+							"pm.expect(jsonData.name).to.eql(\"Jane Smith\");\r",
+							"pm.expect(jsonData.age).to.eql(17);\r",
+							"pm.expect(jsonData.grade).to.eql(\"11th\");\r",
+							"pm.expect(jsonData.subjects[0]).to.eql(\"Biology\");\r",
+							"pm.expect(jsonData.subjects[1]).to.eql(\"Chemistry\");\r",
+							"pm.expect(jsonData.subjects[2]).to.eql(\"History\");\r",
+							"});\r",
+							"\r",
+							"var schema={\r",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"id\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"name\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"age\": {\r",
+							"      \"type\": \"integer\"\r",
+							"    },\r",
+							"    \"grade\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"subjects\": {\r",
+							"      \"type\": \"array\",\r",
+							"      \"items\": [\r",
+							"        {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        {\r",
+							"          \"type\": \"string\"\r",
+							"        }\r",
+							"      ]\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"id\",\r",
+							"    \"name\",\r",
+							"    \"age\",\r",
+							"    \"grade\",\r",
+							"    \"subjects\"\r",
+							"  ]\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Schema is valid\", () => {\r",
+							"pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3000/students/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"students",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Scott\",\r\n    \"location\": \"France\",\r\n    \"phone\": \"123456789\",\r\n    \"courses\": [\r\n        \"C\",\r\n        \"C++\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/students",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Tom\",\r\n    \"location\": \"Germany\",\r\n    \"phone\": \"123456789\",\r\n    \"courses\": [\r\n        \"C\",\r\n        \"C++\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/students/2b0b",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"students",
+						"2b0b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3000/students/2b0b",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"students",
+						"2b0b"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

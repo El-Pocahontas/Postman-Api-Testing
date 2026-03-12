@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "d5a65a0b-df25-4d73-804d-c2d6d5d29e3d",
+		"name": "Authorisation Types",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49628350",
+		"_collection_link": "https://piotr-staszewski666-8584708.postman.co/workspace/Testing~388021e7-9c4c-4d01-b810-b57a25f91afd/collection/49628350-d5a65a0b-df25-4d73-804d-c2d6d5d29e3d?action=share&source=collection_link&creator=49628350"
+	},
+	"item": [
+		{
+			"name": "OAuth2.0",
+			"item": [
+				{
+					"name": "Step 1 -  Request user ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://github.com/login/oath/authorize?client_id=Ov23liNhcOWIRnbCwLMY",
+							"protocol": "https",
+							"host": [
+								"github",
+								"com"
+							],
+							"path": [
+								"login",
+								"oath",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "client_id",
+									"value": "Ov23liNhcOWIRnbCwLMY"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Step 2 - Users are redirected",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Step 3 - Use access token",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Basic Auth",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "postman",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"message\": \"Go to Visualize tab on the right 👉 located alongside the Pretty, Raw, and Preview options. We have added the visualization code to the Tests tab for a request.\",\n\t\"contacts\": [\n\t\t{\n\t\t\t\"name\": \"Lucas Weissnat\",\n\t\t\t\"email\": \"Olga_Kunze35@yahoo.com\"\n\t\t},\n\t\t{\n\t\t\t\"name\": \"Shawn Wolf\",\n\t\t\t\"email\": \"Alysson34@gmail.com\"\n\t\t},\n\t\t{\n\t\t\t\"name\": \"Ronald Stracke\",\n\t\t\t\"email\": \"Rahsaan91@gmail.com\"\n\t\t},\n\t\t{\n\t\t\t\"name\": \"Miss Billie Pfeffer\",\n\t\t\t\"email\": \"Thaddeus.Feil@hotmail.com\"\n\t\t}\n\t\t]\n}\n\t\t"
+				},
+				"url": {
+					"raw": "https://postman-echo.com/basic-auth",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"basic-auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Digest Auth",
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "postman",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://postman-echo.com/digest-auth",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"digest-auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bearer Token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "YOUR_TOKEN_HERE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/user/repos",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"user",
+						"repos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API KeyAuth",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "key",
+							"value": "appid",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "2f04ac1655984e62a42847d94a8d8f28",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "api.openweathermap.org/data/2.5/forecast/daily?-q=Delhi&units=metric&cnt=7",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"forecast",
+						"daily"
+					],
+					"query": [
+						{
+							"key": "-q",
+							"value": "Delhi"
+						},
+						{
+							"key": "units",
+							"value": "metric"
+						},
+						{
+							"key": "cnt",
+							"value": "7"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

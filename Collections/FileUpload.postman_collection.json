@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "a4531b35-655b-46c9-ab07-fe961059a779",
+		"name": "FileUpload",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49628350",
+		"_collection_link": "https://piotr-staszewski666-8584708.postman.co/workspace/Testing~388021e7-9c4c-4d01-b810-b57a25f91afd/collection/49628350-a4531b35-655b-46c9-ab07-fe961059a779?action=share&source=collection_link&creator=49628350"
+	},
+	"item": [
+		{
+			"name": "SingleFile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/Próbuje w IT/Desktop/Tester/Manual testing/Manual testing course notes.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/uploadFile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"uploadFile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MultipleUpload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": [
+								"/C:/Users/Próbuje w IT/Desktop/Tester/Manual testing/Files/OpenCart Project-20250917T162849Z-1-001/OpenCart Project/OpenCart -FRS.pdf",
+								"/C:/Users/Próbuje w IT/Desktop/Tester/Manual testing/Files/OpenCart Project-20250917T162849Z-1-001/OpenCart Project/OpenCart -Test Plan.pdf"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/uploadMultipleFiles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"uploadMultipleFiles"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

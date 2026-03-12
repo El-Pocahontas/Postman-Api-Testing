@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "2b303b00-aa0c-47a4-8aba-6423ddc00187",
+		"name": "API Chaining",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49628350",
+		"_collection_link": "https://piotr-staszewski666-8584708.postman.co/workspace/Testing~388021e7-9c4c-4d01-b810-b57a25f91afd/collection/49628350-2b303b00-aa0c-47a4-8aba-6423ddc00187?action=share&source=collection_link&creator=49628350"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);\r",
+							"pm.environment.set(\"id\",jsonData.id);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Scott\",\r\n    \"location\": \"France\",\r\n    \"phone\": \"123456789\",\r\n    \"courses\": [\r\n        \"C\",\r\n        \"C++\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_QA_env}}/students",
+					"host": [
+						"{{url_QA_env}}"
+					],
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>{\r",
+							"pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful GET request\", () =>{\r",
+							"pm.expect(pm.response.code).to.be.oneOf([200,201,202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => {\r",
+							"pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.test(\"Test data type of the response\", () => {\r",
+							"pm.expect(jsonData).to.be.an(\"object\");\r",
+							"pm.expect(jsonData.name).to.be.a(\"string\");\r",
+							"pm.expect(jsonData.phone).to.be.a(\"string\");\r",
+							"pm.expect(jsonData.courses).to.be.an(\"array\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test array properties\", () => {\r",
+							"pm.expect(jsonData.courses).to.include(\"C\");\r",
+							"pm.expect(jsonData.courses).to.have.members([\"C\", \"C++\"]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Value of fields\", () => {\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.id).to.eql(pm.environment.get(\"id\"));\r",
+							"pm.expect(jsonData.name).to.eql(\"Scott\");\r",
+							"pm.expect(jsonData.phone).to.eql(\"123456789\");\r",
+							"pm.expect(jsonData.location).to.eql(\"France\");\r",
+							"pm.expect(jsonData.courses[0]).to.eql(\"C\");\r",
+							"pm.expect(jsonData.courses[1]).to.eql(\"C++\");\r",
+							"});\r",
+							"\r",
+							"var schema={\r",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"name\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"location\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"phone\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"courses\": {\r",
+							"      \"type\": \"array\",\r",
+							"      \"items\": [\r",
+							"        {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        {\r",
+							"          \"type\": \"string\"\r",
+							"        }\r",
+							"      ]\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"name\",\r",
+							"    \"location\",\r",
+							"    \"phone\",\r",
+							"    \"courses\"\r",
+							"  ]\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Schema is valid\", () => {\r",
+							"pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_QA_env}}/students/{{id}}",
+					"host": [
+						"{{url_QA_env}}"
+					],
+					"path": [
+						"students",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url_QA_env}}/students/{{id}}",
+					"host": [
+						"{{url_QA_env}}"
+					],
+					"path": [
+						"students",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
